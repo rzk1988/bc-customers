@@ -17,10 +17,10 @@ class CustomersController extends BaseController
     public function index()
     {
         $data = [];
-        $customers = $this->bigcommerceService->getCustomers();
+        $customers = $this->bigcommerceService::getCustomers();
         if ($customers){
             foreach ($customers as $customer){
-                $count = $this->bigcommerceService->getOrdersCount(['customer_id' => $customer->id]);
+                $count = $this->bigcommerceService::getOrdersCount(['customer_id' => $customer->id]);
                 $data[] = [
                     'customer' => $customer,
                     'count' => $count

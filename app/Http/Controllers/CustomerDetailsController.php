@@ -17,15 +17,15 @@ class CustomerDetailsController extends BaseController
 
     public function show($id)
     {
-        $customers = $this->bigcommerceService->getCustomer($id);
+        $customers = $this->bigcommerceService::getCustomer($id);
 
-        $orders = $this->bigcommerceService->getOrders(['customer_id' => $id]);
+        $orders = $this->bigcommerceService::getOrders(['customer_id' => $id]);
 
         $lifeTimeValue = 0;
         $ordersData = [];
         if ($orders){
             foreach ($orders as $o){
-                $productsCount = $this->bigcommerceService->getOrderProductsCount($o->id);
+                $productsCount = $this->bigcommerceService::getOrderProductsCount($o->id);
                 $ordersData[] = [
                     'order' => $o,
                     'productsCount' => $productsCount
