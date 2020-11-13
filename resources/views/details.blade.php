@@ -12,7 +12,13 @@
             </tr>
         </thead>
         <tbody>
-            {{-- Details go here --}}
+        @foreach ($orders as $o)
+            <tr>
+                <td>{{ $o['order']->date_created }}</td>
+                <td>{{ $o['productsCount'] }}</td>
+                <td>${{ $o['order']->total_inc_tax }}</td>
+            </tr>
+        @endforeach
             <tr>
                 <td colspan="2">Lifetime Value</td>
                 <td>${{ $lifeTimeValue }}</td>
