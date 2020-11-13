@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\CustomerDetailsController;
+use App\Http\Controllers\CustomersController;
+use App\Services\BigcommerceService;
 use Bigcommerce\Api\Client;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,6 +33,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(CustomersController::class, function ($app) {
+            return new CustomersController($app[BigcommerceService::class]);
+        });
+
+        $this->app->singleton(CustomerDetailsController::class, function ($app) {
+            return new CustomerDetailsController($app[BigcommerceService::class]);
+        });
     }
 }

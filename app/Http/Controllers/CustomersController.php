@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Bigcommerce\Api\Client as Bigcommerce;
+use App\Services\BigcommerceService;
 use Illuminate\Routing\Controller as BaseController;
 
 class CustomersController extends BaseController
 {
+    protected $bigcommerceService;
+
+    public function __construct(BigcommerceService $bigcommerceService)
+    {
+        $this->bigcommerceService = $bigcommerceService;
+    }
+
     public function index()
     {
         $data = [];
-        $customers = Bigcommerce::getCustomers();
+        $customers = $this->bigcommerceService->getCustomers();
         if ($customers){
             foreach ($customers as $customer){
-                $count = Bigcommerce::getOrdersCount(['customer_id' => $customer->id]);
+                $count = $this->bigcommerceService->getOrdersCount(['customer_id' => $customer->id]);
                 $data[] = [
                     'customer' => $customer,
                     'count' => $count

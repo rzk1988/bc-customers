@@ -2,22 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\BigcommerceService;
 use Illuminate\Routing\Controller as BaseController;
 use Bigcommerce\Api\Client as Bigcommerce;
 
 class CustomerDetailsController extends BaseController
 {
+    protected $bigcommerceService;
+
+    public function __construct(BigcommerceService $bigcommerceService)
+    {
+        $this->bigcommerceService = $bigcommerceService;
+    }
+
     public function show($id)
     {
-        $customers = Bigcommerce::getCustomer($id);
+        $customers = $this->bigcommerceService->getCustomer($id);
 
-        $orders = Bigcommerce::getOrders(['customer_id' => $id]);
+        $orders = $this->bigcommerceService->getOrders(['customer_id' => $id]);
 
         $lifeTimeValue = 0;
         $ordersData = [];
         if ($orders){
             foreach ($orders as $o){
-                $productsCount = Bigcommerce::getOrderProductsCount($o->id);
+                $productsCount = $this->bigcommerceService->getOrderProductsCount($o->id);
                 $ordersData[] = [
                     'order' => $o,
                     'productsCount' => $productsCount
