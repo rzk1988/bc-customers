@@ -4,38 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Services\BigcommerceService;
 use Illuminate\Routing\Controller as BaseController;
-use Bigcommerce\Api\Client as Bigcommerce;
 
 class CustomerDetailsController extends BaseController
 {
-    protected $bigcommerceService;
 
-    public function __construct(BigcommerceService $bigcommerceService)
-    {
-        $this->bigcommerceService = $bigcommerceService;
-    }
-
+    /**
+     * Customer page with order history and life time value
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show($id)
     {
-        $customers = $this->bigcommerceService::getCustomer($id);
-
-        $orders = $this->bigcommerceService::getOrders(['customer_id' => $id]);
-
-        $lifeTimeValue = 0;
-        $ordersData = [];
-        if ($orders){
-            foreach ($orders as $o){
-                $productsCount = $this->bigcommerceService::getOrderProductsCount($o->id);
-                $ordersData[] = [
-                    'order' => $o,
-                    'productsCount' => $productsCount
-                ];
-                $lifeTimeValue += $o->total_inc_tax;
-            }
-        }
+        $customer = BigcommerceService::getCustomer($id);
+        $orders = BigcommerceService::getOrders(['customer_id' => $id]);
+        $ordersData = BigcommerceService::getOrdersWithProductsCount($orders);
+        $lifeTimeValue = BigcommerceService::getLifeTimeValue($orders);
 
         return view('details', [
-            'customer' => $customers,
+            'customer' => $customer,
             'orders' => $ordersData,
             'lifeTimeValue' => $lifeTimeValue,
         ]);

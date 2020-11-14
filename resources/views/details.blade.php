@@ -16,7 +16,7 @@
             <tr>
                 <td>{{ $o['order']->date_created }}</td>
                 <td>{{ $o['productsCount'] }}</td>
-                <td>${{ $o['order']->total_inc_tax }}</td>
+                <td>${{ $o['order']->total_ex_tax }}</td>
             </tr>
         @endforeach
             <tr>

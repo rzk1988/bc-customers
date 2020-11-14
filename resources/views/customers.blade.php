@@ -15,7 +15,7 @@
                 <tr>
                     <td>
                         <a href="{{ action('CustomerDetailsController@show', ['id' => $d['customer']->id]) }}">
-                            {{ $d['customer']->first_name }}  {{ $d['customer']->last_name }}
+                            {{ $d['customer']->first_name }} {{ $d['customer']->last_name }}
                         </a>
                     </td>
                     <td>{{ $d['count'] }}</td>
