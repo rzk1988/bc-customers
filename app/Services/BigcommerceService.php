@@ -12,7 +12,7 @@ class BigcommerceService extends Client
      *
      * @return array
      */
-    public static function getCustomersWithOrdersCount(): array
+    public function getCustomersWithOrdersCount(): array
     {
         $data = [];
         $customers = self::getCustomers();
@@ -39,7 +39,7 @@ class BigcommerceService extends Client
      * @param array $orders
      * @return array
      */
-    public static function getOrdersWithProductsCount($orders): array
+    public function getOrdersWithProductsCount($orders): array
     {
         $ordersData = [];
         if ($orders){
@@ -61,7 +61,7 @@ class BigcommerceService extends Client
      * @param $orders
      * @return int
      */
-    public static function getLifeTimeValue($orders): int
+    public function getLifeTimeValue($orders): int
     {
         $lifeTimeValue = 0;
         if ($orders){

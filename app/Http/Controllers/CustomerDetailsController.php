@@ -7,6 +7,12 @@ use Illuminate\Routing\Controller as BaseController;
 
 class CustomerDetailsController extends BaseController
 {
+    protected $bigcommerceService;
+
+    public function __construct(BigcommerceService $bigcommerceService)
+    {
+        $this->bigcommerceService = $bigcommerceService;
+    }
 
     /**
      * Customer page with order history and life time value
@@ -16,10 +22,10 @@ class CustomerDetailsController extends BaseController
      */
     public function show($id)
     {
-        $customer = BigcommerceService::getCustomer($id);
-        $orders = BigcommerceService::getOrders(['customer_id' => $id]);
-        $ordersData = BigcommerceService::getOrdersWithProductsCount($orders);
-        $lifeTimeValue = BigcommerceService::getLifeTimeValue($orders);
+        $customer = $this->bigcommerceService::getCustomer($id);
+        $orders = $this->bigcommerceService::getOrders(['customer_id' => $id]);
+        $ordersData = $this->bigcommerceService->getOrdersWithProductsCount($orders);
+        $lifeTimeValue = $this->bigcommerceService->getLifeTimeValue($orders);
 
         return view('details', [
             'customer' => $customer,

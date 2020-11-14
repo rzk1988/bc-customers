@@ -33,5 +33,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton(CustomersController::class, function ($app) {
+            return new CustomersController($app[BigcommerceService::class]);
+        });
+
+        $this->app->singleton(CustomerDetailsController::class, function ($app) {
+            return new CustomerDetailsController($app[BigcommerceService::class]);
+        });
     }
 }

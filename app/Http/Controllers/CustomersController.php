@@ -7,6 +7,13 @@ use Illuminate\Routing\Controller as BaseController;
 
 class CustomersController extends BaseController
 {
+    protected $bigcommerceService;
+
+    public function __construct(BigcommerceService $bigcommerceService)
+    {
+        $this->bigcommerceService = $bigcommerceService;
+    }
+
     /**
      * Index page with a customer list with their order count
      *
@@ -15,7 +22,7 @@ class CustomersController extends BaseController
     public function index()
     {
         return view('customers', [
-            'data' => BigcommerceService::getCustomersWithOrdersCount()
+            'data' => $this->bigcommerceService->getCustomersWithOrdersCount()
         ]);
     }
 }
